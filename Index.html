@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Be My Valentine?</title>
+
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffd6e0, #ffeef4);
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #d6336c;
+      font-size: 2em;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 14px 28px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    /* 💓 Pulsing Yes button */
+    #yes {
+      background-color: #ff4d6d;
+      color: white;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    #no {
+      background-color: #adb5bd;
+      color: white;
+      position: absolute;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 24px;
+      animation: floatUp 5s linear forwards;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .screenshot {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #d6336c;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Will you be my Valentine? 💖</h1>
+    <button id="yes">Yes 💕</button>
+    <button id="no">No 🙈</button>
+  </div>
+
+  <script>
+    // 💖 CHANGE HER NAME HERE
+    const herName = "Bae";
+
+    const noButton = document.getElementById("no");
+    const yesButton = document.getElementById("yes");
+
+    function moveButton() {
+      const padding = 20;
+      const maxX = window.innerWidth - noButton.offsetWidth - padding;
+      const maxY = window.innerHeight - noButton.offsetHeight - padding;
+
+      noButton.style.left = `${Math.random() * maxX}px`;
+      noButton.style.top = `${Math.random() * maxY}px`;
+
+      // Tiny vibration
+      if (navigator.vibrate) {
+        navigator.vibrate(40);
+      }
+    }
+
+    noButton.addEventListener("mouseover", moveButton);
+    noButton.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveButton();
+    });
+
+    yesButton.addEventListener("click", () => {
+      document.body.innerHTML = `
+        <div class="container">
+          <h1 style="line-height:1.4;">
+            I knew you’d say yes 😅<br><br>
+            I love you sooo much, ${Aliah} ❤️<br><br>
+            Cheers to our first of many Valentines 💌
+          </h1>
+          <div class="screenshot">📸 Screenshot this moment</div
+					>
+        </div>
+      `;
+
+      startHearts();
+    });
+
+    function startHearts() {
+      const hearts = ["❤️", "💖", "💕", "💘", "💓"];
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 20 + 20 + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 5000);
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
